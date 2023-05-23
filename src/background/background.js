@@ -114,17 +114,6 @@ async function onMessageDisplayed(tab, message) {
 }
 
 /**
- * Fired when the selected messages change in any mail tab.
- * @param {Tab} tab
- * @param {MessageList} selectedMessages
- */
-async function onSelectedMessagesChanged(tab, selectedMessages) {
-  const spamScores = messenger.SpamScores
-  const win = await messenger.windows.getCurrent()
-  spamScores.repaint(win.id)
-}
-
-/**
  * Fired when the displayed folder changes in any mail tab
  * @param {Tab} tab
  * @param {MailFolder} displayedFolder
@@ -177,10 +166,6 @@ const init = async () => {
   // Add Listeners
   messenger.messageDisplay.onMessageDisplayed.addListener(onMessageDisplayed)
   messenger.mailTabs.onDisplayedFolderChanged.addListener(onDisplayedFolderChanged)
-  messenger.mailTabs.onSelectedMessagesChanged.addListener(onSelectedMessagesChanged)
-
-  const win = await messenger.windows.getCurrent()
-  spamScores.repaint(win.id)
 
   // Init Data
   const [lowerBounds, upperBounds] = getBounds(storage)
